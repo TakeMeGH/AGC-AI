@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PACMAN
 {
-    public class MC_ : MonoBehaviour
+    public class MC_Controller : MonoBehaviour
     {
         [SerializeField] float _speed;
         [SerializeField] SC_SO_InputReader _inputReader;
