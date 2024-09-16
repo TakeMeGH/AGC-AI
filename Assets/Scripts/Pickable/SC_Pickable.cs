@@ -9,7 +9,7 @@ namespace PACMAN
     public class SC_Pickable : MonoBehaviour
     {
 
-        [SerializeField] Enum_PickableType _pickableType;
+        public Enum_PickableType PickableType;
         public UnityAction<SC_Pickable> OnPicked;
 
         void OnTriggerEnter(Collider other)

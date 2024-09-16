@@ -15,12 +15,22 @@ namespace PACMAN
         [HideInInspector] public SC_ChaseState ChaseState = new SC_ChaseState();
         [HideInInspector] public SC_RetreatState RetreatState = new SC_RetreatState();
         [HideInInspector] public NavMeshAgent NavMeshAgent;
+        [HideInInspector] public Animator Animator;
+
 
         private void Start()
         {
+            NavMeshAgent = GetComponent<NavMeshAgent>();
+            Animator = GetComponent<Animator>();
+
+            if (Player != null)
+            {
+                Player.OnPowerUpStart += StartRetereating;
+                Player.OnPowerUpEnd += StopRetreating;
+            }
+
             _currentState = PatrolState;
             _currentState.EnterState(this);
-            NavMeshAgent = GetComponent<NavMeshAgent>();
         }
 
         private void Update()
@@ -39,5 +49,37 @@ namespace PACMAN
             _currentState.EnterState(this);
         }
 
+        void StartRetereating()
+        {
+            SwitchState(RetreatState);
+        }
+
+        void StopRetreating()
+        {
+            SwitchState(PatrolState);
+        }
+
+        public void Dead()
+        {
+            if (Player != null)
+            {
+                Player.OnPowerUpStart -= StartRetereating;
+                Player.OnPowerUpEnd -= StopRetreating;
+            }
+
+
+            Destroy(gameObject);
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (_currentState != RetreatState)
+            {
+                if (other.gameObject.CompareTag("Player"))
+                {
+                    other.gameObject.GetComponent<MC_Controller>().Dead();
+                }
+            }
+        }
     }
 }

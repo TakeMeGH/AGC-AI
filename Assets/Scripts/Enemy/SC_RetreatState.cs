@@ -8,6 +8,7 @@ namespace PACMAN
     {
         public void EnterState(SC_Enemy enemy)
         {
+            enemy.Animator.SetTrigger("Retreating");
         }
 
         public void ExitState(SC_Enemy enemy)
@@ -16,7 +17,10 @@ namespace PACMAN
 
         public void UpdateState(SC_Enemy enemy)
         {
-            throw new System.NotImplementedException();
+            if (enemy.Player != null)
+            {
+                enemy.NavMeshAgent.destination = enemy.transform.position - enemy.Player.transform.position;
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ namespace PACMAN
     {
         public void EnterState(SC_Enemy enemy)
         {
+            enemy.Animator.SetTrigger("Chasing");
         }
 
         public void ExitState(SC_Enemy enemy)

@@ -9,6 +9,7 @@ namespace PACMAN
         public void EnterState(SC_Enemy enemy)
         {
             _isMoving = false;
+            enemy.Animator.SetTrigger("Patrolling");
         }
 
         public void ExitState(SC_Enemy enemy)
@@ -31,7 +32,7 @@ namespace PACMAN
             }
             else
             {
-                if (Vector3.Distance(_destination, enemy.transform.position) <= 0.1)
+                if (Vector3.Distance(_destination, enemy.transform.position) <= 2)
                 {
                     _isMoving = false;
                 }
